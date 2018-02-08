@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <title>Evernote Lite</title>
+  </head>
+  <body>
+    <div class="row">
+      <div id="preview" class="col-sm-4">
+        <div class="titleList">
+          <ul id="notes">
+
+          </ul>
+        </div>
+          <form id="itemForm">
+            <input type="text" id="titleInput" class="form-control" name="title" value="Title">
+            <textarea type="text" id="bodyInput" class="form-control" name="body" value="Body"></textarea>
+            <input type="submit" id="submit" class="btn btn-primary" value="Add Note">
+          </form>
+      </div>
+      <div id="mainContent" class="col-sm-8">
+        <div id="mainNote">
+          <h2 id="noteTitle">
+
+          </h2>
+          <p id="noteBody">
+
+          </p>
+        </div>
+
+      </div>
+    </div>
+    <script src="adapter.js" type="text/javascript"></script>
+    <script src="app.js" type="text/javascript"></script>
+    <script src="notes.js" type="text/javascript"></script>
+    <script src="user.js" type="text/javascript"></script>
+    <script src="index.js" type="text/javascript"></script>
+  </body>
+</html>
