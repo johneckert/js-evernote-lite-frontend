@@ -9,64 +9,81 @@ const App = (function() {
       });
 
       //Event for Clicking on a note title
-      const noteUL = document.querySelector("#notes");
-      noteUL.addEventListener("click", function(event) {
-        document.querySelector("#noteTitle").innerText = "";
-        document.querySelector("#noteBody").innerHTML = "";
+      document
+        .querySelector("#notes")
+        .addEventListener("click", App.selectNote);
 
-        let noteId = event.target.dataset.id;
-        Adapter.get_notes().then(data => {
-          let relevantNote = data.find(noteObject => {
-            return noteObject.id == noteId;
-          });
-          let note = new Note(relevantNote);
-          note.renderMainContent();
-        });
-      });
       //event for clicking submit to create new note
-      const form = document.getElementById("itemForm");
-      form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        let newTitle = document.getElementById("titleInput").value;
-        let newBody = document.getElementById("bodyInput").value;
-        let formData = { title: newTitle, body: newBody };
-        Adapter.createNoteFetch(formData).then(data => {
-          let currentNote = new Note(data);
-          currentNote.renderPreviewItem();
-          document.getElementById("titleInput").value = "";
-          document.getElementById("bodyInput").value = "";
-        });
-      });
+      document
+        .getElementById("itemForm")
+        .addEventListener("submit", App.createNewNote);
+
       //event for updating a note
-      const updateForm = document.getElementById("mainContentForm");
-      updateForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        let updatedTitle = document.getElementById("noteTitle").value;
-        let noteTitleForID = document.getElementById("noteTitle");
-        let updatedBody = document.getElementById("noteBody").value;
-        let noteID = parseInt(noteTitleForID.dataset.id);
-        let formData = { title: updatedTitle, body: updatedBody, id: noteID };
-        Adapter.updateNoteFetch(formData).then(data => {
-          let updateNote = new Note(data);
-          let relevantLi = document.querySelector(
-            '#notes > [data-id="' + noteID + '"]'
-          );
-          relevantLi.innerHTML = updateNote.title;
+      document
+        .getElementById("mainContentForm")
+        .addEventListener("submit", App.updateNote);
+
+      //event for deleting note
+      document
+        .getElementById("delete")
+        .addEventListener("click", App.deleteNote);
+    }
+
+    static selectNote(event) {
+      document.querySelector("#noteTitle").innerText = "";
+      document.querySelector("#noteBody").innerHTML = "";
+      let noteId = event.target.dataset.id;
+      Adapter.get_notes().then(data => {
+        let relevantNote = data.find(noteObject => {
+          return noteObject.id == noteId;
         });
+        let note = new Note(relevantNote);
+        note.renderMainContent();
       });
-      const deleteButton = document.getElementById("delete");
-      deleteButton.addEventListener("click", function(event) {
-        let noteTitleForID = document.getElementById("noteTitle");
-        let noteID = parseInt(noteTitleForID.dataset.id);
-        Adapter.deleteNoteFetch(noteID);
-        const relevantNote = document.querySelector(
-          "#notes > [data-id='" + noteID + "']"
+    }
+
+    static createNewNote(event) {
+      event.preventDefault();
+      let newTitle = document.getElementById("titleInput");
+      let newBody = document.getElementById("bodyInput");
+      let formData = { title: newTitle.value, body: newBody.value };
+      Adapter.createNoteFetch(formData).then(data => {
+        let currentNote = new Note(data);
+        currentNote.renderPreviewItem();
+        newTitle.value = "";
+        newBody.value = "";
+      });
+    }
+
+    static updateNote(event) {
+      event.preventDefault();
+      let updatedTitle = document.getElementById("noteTitle");
+      let updatedBody = document.getElementById("noteBody");
+      let formData = {
+        title: updatedTitle.value,
+        body: updatedBody.value,
+        id: updatedTitle.dataset.id
+      };
+      Adapter.updateNoteFetch(formData).then(data => {
+        let updateNote = new Note(data);
+        let relevantLi = document.querySelector(
+          '#notes > [data-id="' + updateNote.id + '"]'
         );
-        noteTitleForID.value = "";
-        let mainBody = document.getElementById("noteBody");
-        mainBody.value = "";
-        relevantNote.remove();
+        relevantLi.innerHTML = updateNote.title;
       });
+    }
+
+    static deleteNote(event) {
+      let noteTitleForID = document.getElementById("noteTitle");
+      let noteID = parseInt(noteTitleForID.dataset.id);
+      Adapter.deleteNoteFetch(noteID);
+      const relevantNote = document.querySelector(
+        "#notes > [data-id='" + noteID + "']"
+      );
+      noteTitleForID.value = "";
+      let mainBody = document.getElementById("noteBody");
+      mainBody.value = "";
+      relevantNote.remove();
     }
   };
 })();

@@ -1,1 +1,37 @@
+@import url("https://fonts.googleapis.com/css?family=Rokkitt:300");
 
+body {
+  padding: 3%;
+}
+
+#notes {
+  font-family: "Rokkitt", serif;
+  font-weight: bold;
+}
+
+#notes li:hover {
+  color: #89f038;
+}
+
+#noteTitle {
+  color: #89f038;
+  font-family: "Rokkitt", serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#noteBody {
+  font-family: helvetica;
+  font-size: 12px;
+  height: 400px;
+}
+
+#update {
+  background-color: #89f038;
+}
+
+#itemForm {
+  border-style: groove;
+  border-radius: 1%;
+  padding: 3%;
+}
