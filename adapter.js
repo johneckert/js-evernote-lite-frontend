@@ -6,22 +6,29 @@ const Adapter = (function() {
       );
     }
 
-    static createNoteFetch() {
-      let newTitle = document.getElementById("titleInput").value;
-      let newBody = document.getElementById("bodyInput").value;
-      let formData = { title: newTitle, body: newBody };
+    static createNoteFetch(formData) {
       return fetch("http://localhost:3000/api/v1/notes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
-      })
-        .then(response => response.json())
-        .then(data => {
-          let currentNote = new Note(data);
-          currentNote.renderPreviewItem();
-        });
+      }).then(response => response.json());
+    }
 
-      ///FORM NOT SUBMITTING!!!!
+    static updateNoteFetch(formData) {
+      return fetch(`http://localhost:3000/api/v1/notes/${formData.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      }).then(response => {
+        return response.json();
+      });
+    }
+
+    static deleteNoteFetch(id) {
+      fetch(`http://localhost:3000/api/v1/notes/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      });
     }
   };
 })();

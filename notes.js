@@ -12,14 +12,16 @@ const Note = (function() {
       noteItem.dataset.id = this.id;
       let noteTitleText = document.createTextNode(this.title);
       noteItem.append(noteTitleText);
-      return noteItem;
+      document.querySelector("#notes").append(noteItem);
     }
 
     renderMainContent() {
-      let titleText = document.createTextNode(this.title);
-      let bodyText = document.createTextNode(this.body);
-      document.querySelector("#noteTitle").append(titleText);
-      document.querySelector("#noteBody").append(bodyText);
+      let mainContentTitle = document.querySelector("#noteTitle");
+      mainContentTitle.value = this.title;
+      mainContentTitle.dataset.id = this.id;
+      let mainContentBody = document.querySelector("#noteBody");
+      mainContentBody.value = this.body;
+      mainContentBody.dataset.id = this.id;
     }
   };
 })();
